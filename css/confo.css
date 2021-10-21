@@ -37,8 +37,10 @@ textarea{
 .video_container_div{ position: relative;}
 #multi_video_container_div{
     margin-top: 20px;
+    
 }
 #local_video_div{
+  
     margin-top:20px;
 }
 /*#multi_video_container_div{*/
@@ -61,7 +63,7 @@ textarea{
     100% { top:0px;}
 }
 .multi_text_container_div{
-    position: absolute;
+    position: relative;
     overflow: auto;
     z-index: 9002;
     margin:5px;
@@ -126,8 +128,29 @@ cursor:pointer;
     top: 5%;
     left: 5%;
 }
-
-@media screen and (min-width: 1690px) {
+#screen_share{
+    position: fixed;
+    height: 60vh;
+    width: 100%;
+    display:none ;
+    margin: 20% auto auto 50%;
+    background-color: #0af;
+}
+.playerScreen{
+    height: 1000px;
+    width: 1000px;
+    position: absolute;
+}
+video{
+    height: 100%;
+    width: 100%;
+}
+/* .classic_vcx_stream
+{
+    /* height: 100% !important;
+    width: 100% !important; 
+} */
+/* @media screen and (min-width: 1690px) {
     .classic_vcx_stream
     {
         height: 400px !important;
@@ -173,4 +196,4 @@ cursor:pointer;
 
     }
 }
-
+ */
