@@ -12,6 +12,8 @@ var confo_variables = {
     isSpotLightM: false,
     isSpotLightP: false,
     isAudioMute: false,
+    isAnnotate: false,
+    before_annotate_id: '',
     isVideoMute: false,
     isRedchat: false,
     isChatViewOpen: false,
@@ -135,6 +137,8 @@ var confo_variables = {
                                 if (room.me.role === 'moderator') {
                                     if (confo_variables.isShareReceived === true) {
                                         document.querySelector(`#s_${item.streamId}`).setAttribute('onclick', 'spotlight(this)');
+                                        document.querySelector(`#s_${item.streamId}`).classList.replace('remove-spotlight','spotlight');
+                                        document.querySelector(`#s_${item.streamId}`).setAttribute('title', 'Spotlight User');
                                     }
                                     else if (confo_variables.isShareStarted === true) {
                                         document.querySelector('.custom-app-wrapper').classList.remove('screen-open');
@@ -142,6 +146,9 @@ var confo_variables = {
                                         var r = document.querySelector(`.remote_view_${item.streamId}`);
                                         var fluid = document.querySelector('.row-fluid');
                                         document.querySelector(`#s_${item.streamId}`).setAttribute('onclick', 'spotlight(this)');
+                                        document.querySelector(`#s_${item.streamId}`).classList.replace('remove-spotlight','spotlight');
+
+                                        document.querySelector(`#s_${item.streamId}`).setAttribute('title', 'Spotlight User');
                                         fluid.appendChild(r);
 
                                     } else {
@@ -150,13 +157,16 @@ var confo_variables = {
                                         var r = document.querySelector(`.remote_view_${item.streamId}`);
                                         var fluid = document.querySelector('.row-fluid');
                                         document.querySelector(`#s_${item.streamId}`).setAttribute('onclick', 'spotlight(this)');
+                                        document.querySelector(`#s_${item.streamId}`).classList.replace('remove-spotlight','spotlight');
+
+                                        document.querySelector(`#s_${item.streamId}`).setAttribute('title', 'Spotlight User');
                                         fluid.appendChild(r);
                                     }
                                     confo_variables.SpotLightClientId = '';
                                     confo_variables.SpotLightUserStreamId = '';
                                 } else {
                                     if (confo_variables.isShareReceived === true) {
-                                       
+
                                     }
                                     else {
                                         document.querySelector('.custom-app-wrapper').classList.remove('screen-open');
@@ -178,6 +188,9 @@ var confo_variables = {
                                 if (room.me.role === 'moderator') {
                                     if (confo_variables.isShareReceived === true) {
                                         document.querySelector(`#s_${item.streamId}`).setAttribute('onclick', 'removeSpotlight(this)');
+                                        document.querySelector(`#s_${item.streamId}`).setAttribute('title', 'Remove Spotlight');
+                                        document.querySelector(`#s_${item.streamId}`).classList.replace('spotlight','remove-spotlight');
+
                                     }
                                     else if (confo_variables.isShareStarted === true) {
                                         document.querySelector('.custom-app-wrapper').classList.add('screen-open');
@@ -187,6 +200,10 @@ var confo_variables = {
                                         scr.appendChild(r);
                                         console.log("screen-inner", scr);
                                         document.querySelector(`#s_${item.streamId}`).setAttribute('onclick', 'removeSpotlight(this)');
+                                        document.querySelector(`#s_${item.streamId}`).classList.replace('spotlight','remove-spotlight');
+
+                                        document.querySelector(`#s_${item.streamId}`).setAttribute('title', 'Remove Spotlight');
+
                                     }
                                     else {
                                         document.querySelector('.custom-app-wrapper').classList.add('screen-open');
@@ -196,6 +213,9 @@ var confo_variables = {
                                         scr.appendChild(r);
                                         console.log("screen-inner", scr);
                                         document.querySelector(`#s_${item.streamId}`).setAttribute('onclick', 'removeSpotlight(this)');
+                                        document.querySelector(`#s_${item.streamId}`).classList.replace('spotlight','remove-spotlight');
+
+                                        document.querySelector(`#s_${item.streamId}`).setAttribute('title', 'Remove Spotlight');
                                     }
                                 }
                                 else {
@@ -235,13 +255,32 @@ var confo_variables = {
                                 remote_video_item.style.display = 'block';
 
                                 if (isModerator) {
+                                    var spot_and_annotate = document.createElement('div');
+                                    spot_and_annotate.setAttribute('class' , 'spotannotate');
                                     var spot_div = document.createElement('div');
                                     spot_div.setAttribute('class', `spotlight`);
                                     spot_div.setAttribute('id', `s_${item}`);
-                                    spot_div.setAttribute('style', "position:absolute ;right:0 ;z-index:100 ;");
+                                    spot_div.setAttribute('style', "z-index:100 ;");
                                     spot_div.setAttribute('onclick', 'spotlight(this)');
                                     spot_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+                                    spot_div.setAttribute('title', 'Spotlight User');
                                     remote_video_item.appendChild(spot_div);
+
+                                    // <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+
+                                    var annotate_div = document.createElement('div');
+                                    annotate_div.setAttribute('class', `annotate`);
+                                    annotate_div.setAttribute('id', `a_${item}`);
+                                    annotate_div.setAttribute('style', "z-index:100 ;");
+                                    annotate_div.setAttribute('onclick', 'annotate(this)');
+                                    annotate_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>';
+                                    annotate_div.setAttribute('title', 'Annotate User');
+                                    spot_and_annotate.appendChild(spot_div);
+                                    spot_and_annotate.appendChild(annotate_div);
+                                    
+
+                                    remote_video_item.appendChild(spot_and_annotate);
+
                                 }
 
                                 var remote_video_inner = document.createElement('div');
@@ -407,6 +446,29 @@ var confo_variables = {
                     toastr.options.positionClass = 'toast-top-right';
                     toastr.info('Room is Unlocked');
                 });
+
+                room.addEventListener('canvas-started', function (event) {
+                    if (room.clientId !== event.message.clientId) {
+                        canvasStreamId = event.message.streamId;
+                        var st = room.remoteStreams.get(canvasStreamId);
+                        console.log('Started Share st...', st);
+                        if (st.stream !== undefined) {
+                            document.querySelector('.custom-app-wrapper').classList.add('screen-open');
+                            st.play("screen_share", confo_variables.PlayerOpt);
+                            document.querySelector('#player_102 video').removeAttribute('height');
+                        }
+                        confo_variables.isAnnotate = true;
+                    }
+                })
+
+                room.addEventListener("canvas-stopped", function (event) {
+                    if (room.clientId !== event.message.clientId) {
+                        document.querySelector('#player_102').remove();
+                        document.querySelector('.screen-inner').setAttribute('style', '');
+                        document.querySelector('.custom-app-wrapper').classList.remove('screen-open');
+                        confo_variables.isAnnotate = false;
+                    }
+                })
 
                 // Notification to all when share starts
                 room.addEventListener("share-started", function (event) {
@@ -574,6 +636,11 @@ var confo_variables = {
             toastr.error(language.ss_unsupport_chrome_below72);
             return;
         }
+        else if (this.isAnnotate === true) {
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.error('Annotation is on');
+            return;
+        } 
         this.streamShare = room.startScreenShare(function (result) {
             confo_variables.isShareStarted = true;
             document.querySelector('.cm-screen-share').setAttribute('onclick', 'stopScreenShare()');
@@ -593,6 +660,80 @@ var confo_variables = {
             // confo_variables.isShare = false;
         });
     },
+
+    annotateUser: function (_this) {
+
+        if (
+            navigator.userAgent.indexOf("QQBrowser") > -1 &&
+            room.Connection.getBrowserVersion() < 72
+        ) {
+            toastr.error(language.ss_unsupport_qq);
+            return;
+        } else if (
+            navigator.userAgent.indexOf("Chrome") > -1 &&
+            room.Connection.getBrowserVersion() < 72
+        ) {
+            toastr.error(language.ss_unsupport_chrome_below72);
+            return;
+        } else if(this.before_annotate_id !== '') {
+            toastr.error('Another participant is annotated');
+            return;
+        }
+        var id_annotate_div = _this.id.replace('a_', '');
+        room.annotateToolAction('draw', true);
+        annotateStreamID = room.remoteStreams.get(parseInt(id_annotate_div));
+
+        room.startAnnotation(annotateStreamID, function (rs) {
+            // if (rs.result === 0) {
+            //     isPresentating = true;
+            //     shareStart = true;
+            //     $("#share_screen_btn").prop("title", "Stop Share").addClass('blink-image');
+            //     $('#screenShareStarted').show();
+            // } else if (rs.result === 1151) {
+            //     desktop_shared = false;
+            //     toastr.error(rs.error);
+            // } else if (rs.result === 1144) {
+            //     desktop_shared = false;
+            //     // toastr.error(rs.error);
+            // } else if (rs.result === 1150) {
+            //     desktop_shared = false;
+            //     $("#extension-dialog").modal("toggle");
+            // } else {
+            //     desktop_shared = false;
+            //     toastr.error("Screen share not supported");
+            // }
+        });
+        document.querySelector(`#a_${parseInt(id_annotate_div)}`).style.zIndex = 5010;
+        document.querySelector(`#s_${parseInt(id_annotate_div)}`).style.zIndex = 5010;
+        var height = document.querySelector('.video-inner').offsetHeight;
+        var width = document.querySelector('.video-inner').offsetWidth;
+
+        // var height_value = height.replace('px','');
+        document.querySelector(`#draw_veneer2`).setAttribute('height',`${height}`);
+        document.querySelector(`#stream${parseInt(id_annotate_div)}_veneer`).setAttribute('height',`${height}`);
+        document.querySelector(`#draw_veneer2`).setAttribute('width',`${width}`);
+        document.querySelector(`#stream${parseInt(id_annotate_div)}_veneer`).setAttribute('width',`${width}`);
+        this.before_annotate_id = _this.id;
+        this.isAnnotate = true;
+        document.getElementById(_this.id).setAttribute('onclick', 'removeAnnotation(this)');
+        document.getElementById(_this.id).classList.replace('annotate','remove-annotate');
+
+    },
+    stopAnnotation: function (_this) {
+        room.stopAnnotation(function (res) {
+            if (res.result == 0) {
+                // $("#share_screen_btn").prop("title", "Start Share").removeClass('blink-image');
+
+            }
+        });
+        this.isAnnotate = false;
+        this.before_annotate_id = '';
+        document.getElementById(_this.id).setAttribute('onclick', 'annotate(this)');
+        document.getElementById(_this.id).classList.replace('remove-annotate','annotate');
+
+
+    },
+
     updateUsersList: function () {
         var list = '';
         var chilren_user_list = document.querySelector(".participants-inner");
@@ -785,6 +926,11 @@ var confo_variables = {
         return strTime;
     },
     spot_light: function (param) {
+        if(this.isAnnotate === true) {
+            toastr.options.positionClass = 'toast-bottom-right';
+            toastr.error("Annotation is on");
+            return;
+        }
         var str_id = param.id.replace('s_', '');
         room.addSpotlightUsers([room.activeTalkerList.get(parseInt(str_id)).clientId], function (resp) {
             // resp json { "result": Number, "clients": [] }
@@ -989,4 +1135,20 @@ function removeSpotlight(_this) {
     if (confo_variables.isSpotLightM === true) {
         confo_variables.spotlightRemove(_this);
     }
+}
+
+
+function annotate(_this) {
+    if(confo_variables.isShareReceived || confo_variables.isSpotLightM || confo_variables.isShareStarted)
+    {
+        toastr.options.positionClass = 'toast-bottom-right';
+        toastr.error('Screen Share or Spotlight is on');
+    }
+    else {
+        confo_variables.annotateUser(_this);
+    }
+}
+
+function removeAnnotation(_this) {
+    confo_variables.stopAnnotation(_this);
 }

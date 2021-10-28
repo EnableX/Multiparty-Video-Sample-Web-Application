@@ -195,6 +195,25 @@ body.custom-multi-app-page {
     max-width: 100%;
 }
 
+.custom-multi-app-page .video-area .video-item .video-inner #canvas-wrapper {
+    position: unset !important;
+}
+
+.custom-multi-app-page .video-area .video-item .video-inner canvas {
+    position: absolute;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    /* -o-object-fit: cover;
+    object-fit: cover; */
+    max-width: 100%;
+}
+
+.custom-multi-app-page .video-area .video-item .video-inner #annotationToolbarContainer {
+    z-index: 5001 !important;
+}
+
 .custom-multi-app-page .video-area {
     width: 100%;
     padding: 50px;
@@ -883,13 +902,48 @@ body.custom-multi-app-page {
 }
 
 .spotlight {
-    right: 5% !important;
-    top: 5% !important;
+    /* right: 5% !important;
+    top: 5% !important; */
     color: black !important;
     background-color: white !important;
     border-radius: 50% !important;
     height: 25px !important;
     cursor: pointer;
+    margin-right: 10px;
+}
+
+.remove-spotlight {
+    color: white !important;
+    background-color: black !important;
+    border-radius: 50% !important;
+    height: 25px !important;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.annotate{
+    /* right: 20% !important;
+    top: 5% !important; */
+    color: black !important;
+    background-color: white !important;
+    border-radius: 50% !important;
+    height: 25px !important;
+    cursor: pointer;
+}
+
+.remove-annotate {
+    color: white !important;
+    background-color: black !important;
+    border-radius: 50% !important;
+    height: 25px !important;
+    cursor: pointer;
+}
+ 
+.spotannotate{
+    display: flex;
+    position: absolute;
+    right: 10%;
+    top: 10%;
 }
 
 .video-inner-copy {
@@ -900,6 +954,13 @@ body.custom-multi-app-page {
 }
 
 .video-inner-copy video {
+    height: initial !important;
+    width: initial !important;
+    display: block;
+    margin: 0 auto;
+}
+
+.video-inner-copy canvas {
     height: initial !important;
     width: initial !important;
     display: block;
@@ -1179,9 +1240,9 @@ body.custom-multi-app-page {
         display: none;
     }
 
-    .screen-open .screen-area .screen-inner {
+    /* .screen-open .screen-area .screen-inner {
         padding-bottom: 49vh;
-    }
+    } */
 
     .custom-multi-app-page .screen-open .video-area .row-fluid {
         justify-content: space-around;
