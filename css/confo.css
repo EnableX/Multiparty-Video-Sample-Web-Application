@@ -1168,6 +1168,10 @@ video {
     object-fit: fill !important;
 }
 
+.element-none{
+    display: none;
+}
+
 .file-input{
     display: none;
 }
