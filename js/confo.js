@@ -27,9 +27,6 @@ var confo_variables = {
     isShareStarted: false,
     isShareReceived: false,
     streamShare: null,
-    canvasElement: null,
-    canvasElementParent: null,
-    iswhiteboard: false,
     VideoSize: {
         'HD': [320, 180, 1280, 720],
         'SD': [640, 480, 640, 480],
@@ -87,17 +84,6 @@ var confo_variables = {
             if (success && success !== null) {
                 // console.log("this.localStream===="+JSON.stringify(localStream));
                 localStream.play("self-view", confo_variables.PlayerOpt);
-                // canvasElementParent = document.createElement('div');
-                // canvasElementParent.setAttribute('id','whiteBoard');
-                // canvasElement = document.createElement('canvas');
-                // canvasElement.setAttribute('id', 'wb');
-                // canvasElementParent.appendChild(canvasElement);
-                wb = new EnxWb({
-                    canvasId: 'wb',
-                    initialWidth: 900,
-                    initialHeight: 450,
-                    scheme: 'default',
-                });
                 console.log("confo_varibles---" + this.isAudioMute);
                 console.log("confo_varibles---" + confo_variables.isAudioMute);
 
@@ -138,9 +124,7 @@ var confo_variables = {
                 video_caption.appendChild(remote_name_p);
                 document.querySelector('#self-view').appendChild(video_caption);
                 // }
-                if (isModerator && room.roomSettings.canvas === true) {
-                    document.querySelector('#whiteboard_button').removeAttribute('class', 'element-none');
-                }
+
                 if (!isModerator) {
                     // document.querySelector('#invite_url').style.display = 'none';
                     document.querySelector('.lock').style.display = 'none';
@@ -525,8 +509,6 @@ var confo_variables = {
                     // console.log(data);
                     console.log('user-connected', JSON.stringify(event));
                     confo_variables.updateUsersList();
-                    var clientId = event.clientId;
-                    wb.shareWith(clientId);
                     // confo_variables.updateSmallIcons();
                 });
 
@@ -894,12 +876,7 @@ var confo_variables = {
         }
         else if (this.isAnnotate === true) {
             toastr.options.positionClass = 'toast-bottom-right';
-            toastr.error('Another Presentation is active');
-            return;
-        }
-        else if(this.iswhiteboard === true) {
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.error('WhiteBoard is on');
+            toastr.error('Annotation is on');
             return;
         }
         this.streamShare = room.startScreenShare(function (result) {
@@ -907,9 +884,6 @@ var confo_variables = {
                 document.querySelector('.cm-screen-share').title = 'Stop Share';
                 confo_variables.isShareStarted = true;
                 document.querySelector('.cm-screen-share').setAttribute('onclick', 'stopScreenShare()');
-            }
-            else if (result.result === 1144) {
-                console.log("result ", result.result);
             }
             else {
                 toastr.error("screen share not supported");
@@ -955,11 +929,6 @@ var confo_variables = {
             return;
         } else if (this.before_annotate_id !== '') {
             toastr.error('Another participant is annotated');
-            return;
-        }
-        else if(this.iswhiteboard === true) {
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.error('WhiteBoard is on');
             return;
         }
         var id_annotate_div = _this.id.replace('a_', '');
@@ -1128,12 +1097,12 @@ var confo_variables = {
             desc.appendChild(time_div);
             chat_item.appendChild(desc);
             chat_text_area.appendChild(chat_item);
-            if (obj !== 'file') {
+            if(obj !== 'file') {
                 room.sendMessage(message_to_send, true, [], function (data) {
                     console.log('Data to send is ---' + JSON.stringify(data));
                     // Message sent
                     document.querySelector('textarea').value = '';
-
+    
                 });
             }
         }
@@ -1226,11 +1195,7 @@ var confo_variables = {
     spot_light: function (param) {
         if (this.isAnnotate === true) {
             toastr.options.positionClass = 'toast-bottom-right';
-            toastr.error("Another Presentation is active");
-            return;
-        } else if(this.iswhiteboard === true) {
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.error('WhiteBoard is on');
+            toastr.error("Annotation is on");
             return;
         }
         var str_id = param.id.replace('s_', '');
@@ -1310,11 +1275,6 @@ var confo_variables = {
 
             })
         }
-        if (room.me.role === 'moderator') {
-            if(this.iswhiteboard === true) {
-                whiteBoardStop();
-            }
-        }
 
         window.location.href = window.location.origin;
     },
@@ -1340,56 +1300,6 @@ var confo_variables = {
                 toastr.error(result.message);
             }
         });
-    },
-    startWhiteBoard: function () {
-        if(this.isShareReceived === true || this.isShareStarted === true) {
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.error("Screen Share is on");
-            return;
-        } 
-        else if(this.isAnnotate === true) {
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.error("Another Presentation is active");
-            return;
-        } 
-        else if(this.isSpotLightM === true || this.isSpotLightP === true) {
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.error("Spotlight is on");
-            return;
-        }
-        wb = new EnxWb({
-            canvasId: 'wb',
-            initialWidth: 900,
-            initialHeight: 450,
-            scheme: 'default',
-        });
-        document.querySelector('#wb').classList.toggle('element-none');
-        wb.create(room);
-        wb.startStreaming();
-        this.iswhiteboard = true;
-        document.querySelector('#startCollaboration').style.display = 'none';
-        document.querySelector('.custom-app-wrapper').classList.add('screen-open');
-        document.querySelector('.custom-app-wrapper').classList.add('spotlight-open');
-        document.querySelector('#whiteboard_button').setAttribute('onclick', 'whiteBoardStop()');
-        // var scr = document.querySelector('.screen-inner');
-        // scr.appendChild();
-    },
-    stopWhiteBoard: function () {
-        if (wb) {
-            wb.stopStreaming();
-            wb.stopCollaboration();
-            document.querySelector('#whiteboard_button').setAttribute('onclick', 'whiteboardStart()');
-            document.querySelector('.custom-app-wrapper').classList.remove('screen-open');
-            document.querySelector('.custom-app-wrapper').classList.remove('spotlight-open');
-            document.querySelector('#wb').classList.toggle('element-none');
-            document.querySelector('.canvas-container').remove();
-            var canvas = document.createElement('canvas');
-            canvas.setAttribute('id', 'wb');
-            canvas.setAttribute('class', 'element-none');
-            document.querySelector('#screen_share').appendChild(canvas);
-            wb = null;
-            this.iswhiteboard = false;
-        }
     }
 
 
@@ -1626,12 +1536,4 @@ function copyUrl() {
 
 function changeCamera() {
     confo_variables.CameraChange();
-}
-
-function whiteboardStart() {
-    confo_variables.startWhiteBoard();
-}
-
-function whiteBoardStop() {
-    confo_variables.stopWhiteBoard();
 }
