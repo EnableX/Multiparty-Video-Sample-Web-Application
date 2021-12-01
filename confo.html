@@ -12,6 +12,7 @@
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 
+    <script src="https://togetherjs.com/togetherjs-min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/confo.css">
     <link rel="stylesheet" href="css/core.css">
@@ -99,6 +100,21 @@
                                         </svg>
                                     </a>
                                 </li>
+
+                                <li class="co-browsing-btn" id="co-browsing" title="Open Co-Browsing">
+                                    <a>
+                                        <svg  width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="feather feather-globe" onclick="openCb()" id="cb-small-btn">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line x1="2" y1="12" x2="22" y2="12" />
+                                            <path
+                                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                        </svg>
+                                    </a>
+                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -111,7 +127,56 @@
                             <div class="video-item item1">
                                 <div class="video-inner" id="self-view">
 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-volume-2" style="display:block;"
+                                        id="full-volume-small-s">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                    </svg>
+
+
+
                                 </div>
+                                <div class="pull-out-menu" style="display: none;" id="pull-temp">
+                                    <ul>
+                                        <li id="pull-spotlight">Spotlight</li>
+                                        <li id="pull-annotate">Annotation</li>
+                                    </ul>
+                                </div>
+
+                                <div class="volume-slider" style="display:none;" id="slider-temp">
+                                    <i class="fa fa-volume-down"></i>
+
+                                    <input id="volume-slider-small" type="range" min="0" max="100" value="100"> </input>
+                                    <i class="fa fa-volume-up"></i>
+                                </div>
+
+                                <!-- <div class="modal-content cb-div" style="display:none" id="cb-temp">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" style="color: red;" onclick="closeCb()">&times;</button>
+                                        <h4 class="modal-title">Co-Browsing</h4>
+                                      </div>
+                                    <select class="modal-body form-select" aria-label="Default select example" id="cb-select">
+                                        <option selected>https://meet.vcloudx.com</option>
+                                        
+                                      </select>
+
+                                      <button type="button" class="btn btn-primary" id="cb-go-btn" onclick="sendCb()" data-dismiss="modal">Go</button>
+                                </div> -->
+
+                                
+
+
+
+
+                                <!-- <div class="pull-out-menu" style="display:none;" id="pull-out-temp">
+                                    <ul>
+                                        <li>Spotlight</li>
+                                        <li>Annotate</li>
+                                    </ul>
+                                </div> -->
+
                                 <div class="video-caption" style="display: none;">
                                     <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
                                         stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
@@ -144,6 +209,25 @@
                                         </path>
                                         <line x1="1" y1="1" x2="23" y2="23"></line>
                                     </svg>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-volume-2" style="display:block;"
+                                        id="full-volume-small">
+                                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+                                    </svg>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-align-justify" id="pop-out-icon"
+                                        style="display: block;">
+                                        <line x1="21" y1="10" x2="3" y2="10" />
+                                        <line x1="21" y1="6" x2="3" y2="6" />
+                                        <line x1="21" y1="14" x2="3" y2="14" />
+                                        <line x1="21" y1="18" x2="3" y2="18" />
+                                    </svg>
+
                                 </div>
                             </div>
                             <div class="video-item item2 remote-view-parent" style="display:none">
@@ -243,7 +327,8 @@
                                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                                         </svg>
                                     </button>
-                                    <label title="Choose File" for="file_upload_public" class="d-inline text-secondary pointer">
+                                    <label title="Choose File" for="file_upload_public"
+                                        class="d-inline text-secondary pointer">
                                         <svg class="message-submit" viewBox="0 0 24 24" width="27" height="23"
                                             stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
                                             stroke-linejoin="round" class="css-i6dzq1">
@@ -492,6 +577,7 @@
     <script type="text/javascript" src="js/EnxRtc.js"></script>
     <script type="text/javascript" src="js/confo.js"></script>
     <script type="text/javascript" src="js/resonsive.js"></script>
+    <script type="text/javascript" src="js/cb.js"></script>
 </body>
 
 </html>

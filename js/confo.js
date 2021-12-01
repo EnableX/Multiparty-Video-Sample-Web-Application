@@ -1,6 +1,8 @@
 // All variables are stored in object which are used in this file
 
 var confo_variables = {
+    isSliderOn:false,
+    isMenuOn:false,
     activeTalkerInfo: {},
     roomId: '',
     searchParams: '',
@@ -129,7 +131,11 @@ var confo_variables = {
                     // document.querySelector('#invite_url').style.display = 'none';
                     document.querySelector('.lock').style.display = 'none';
                     document.querySelector('.recording-btn').style.display = 'none';
+
+                    document.querySelector('.co-browsing-btn').style.display="none";
                 }
+
+                
 
                 // toastr.error("you are joined");
                 if (room.waitRoom && room.me.role != "moderator") {
@@ -197,35 +203,35 @@ var confo_variables = {
                                 remote_video_item.style.display = 'block';
 
                                 if (isModerator) {
-                                    var spot_and_annotate = document.createElement('div');
-                                    spot_and_annotate.setAttribute('class', 'spotannotate');
-                                    var spot_div = document.createElement('div');
-                                    spot_div.setAttribute('class', `spotlight`);
-                                    spot_div.setAttribute('id', `s_${item}`);
-                                    spot_div.setAttribute('style', "z-index:100 ;");
-                                    spot_div.setAttribute('onclick', 'spotlight(this)');
-                                    spot_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-                                    spot_div.setAttribute('title', 'Spotlight');
-                                    remote_video_item.appendChild(spot_div);
-                                    spot_and_annotate.appendChild(spot_div);
+                                    // var spot_and_annotate = document.createElement('div');
+                                    // spot_and_annotate.setAttribute('class', 'spotannotate');
+                                    // var spot_div = document.createElement('div');
+                                    // spot_div.setAttribute('class', `spotlight`);
+                                    // spot_div.setAttribute('id', `s_${item}`);
+                                    // spot_div.setAttribute('style', "z-index:100 ;");
+                                    // spot_div.setAttribute('onclick', 'spotlight(this)');
+                                    // spot_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+                                    // spot_div.setAttribute('title', 'Spotlight');
+                                    // remote_video_item.appendChild(spot_div);
+                                    // spot_and_annotate.appendChild(spot_div);
 
-                                    if (room.roomSettings.hasOwnProperty('canvas')) {
-                                        {
-                                            if (room.roomSettings.canvas === true) {
-                                                var annotate_div = document.createElement('div');
-                                                annotate_div.setAttribute('class', `annotate`);
-                                                annotate_div.setAttribute('id', `a_${item}`);
-                                                annotate_div.setAttribute('style', "z-index:100 ;");
-                                                annotate_div.setAttribute('onclick', 'annotate(this)');
-                                                annotate_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>';
-                                                annotate_div.setAttribute('title', 'Annotate User');
-                                                spot_and_annotate.appendChild(annotate_div);
-                                            }
-                                        }
-                                    }
+                                    // if (room.roomSettings.hasOwnProperty('canvas')) {
+                                    //     {
+                                    //         if (room.roomSettings.canvas === true) {
+                                    //             var annotate_div = document.createElement('div');
+                                    //             annotate_div.setAttribute('class', `annotate`);
+                                    //             annotate_div.setAttribute('id', `a_${item}`);
+                                    //             annotate_div.setAttribute('style', "z-index:100 ;");
+                                    //             annotate_div.setAttribute('onclick', 'annotate(this)');
+                                    //             annotate_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>';
+                                    //             annotate_div.setAttribute('title', 'Annotate User');
+                                    //             spot_and_annotate.appendChild(annotate_div);
+                                    //         }
+                                    //     }
+                                    // }
 
 
-                                    remote_video_item.appendChild(spot_and_annotate);
+                                    // remote_video_item.appendChild(spot_and_annotate);
 
                                 }
 
@@ -258,14 +264,70 @@ var confo_variables = {
                                 small_mute_video.setAttribute('id', `mute-video-small-${confo_variables.activeTalkerInfo[parseInt(item)].clientId}`);
                                 small_mute_video.innerHTML = ' <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 2 2v3.34l1 1L23 7v10"></path><line x1="1" y1="1" x2="23" y2="23"></line>'
 
+                                var sliderDiv = document.querySelector('.volume-slider').cloneNode();
+                                // sliderDiv.setAttribute('data-visible',`${confo_variables.activeTalkerInfo[parseInt(item)].clientId}}-false`);
+                                sliderDiv.setAttribute('id',`slider-temp-${confo_variables.activeTalkerInfo[parseInt(item)].clientId}`);
+                                var tempClientId=String(confo_variables.activeTalkerInfo[parseInt(item)].clientId);
+                                sliderDiv.innerHTML= `<i class="fa fa-volume-down"></i><input type="range"  min="0" max="100" value="100" id="slider-value-${item}" onchange="changeRange('${item}','${tempClientId}')"> </input><i class="fa fa-volume-up"></i>`;
+                                sliderDiv.setAttribute('style','display:none');
+                                
+                                // var pulloutDiv = document.querySelector('.pull-out-menu').cloneNode();
+                                // pulloutDiv.setAttribute('id',`pull-out-temp-${confo_variables.activeTalkerInfo[parseInt(item)].clientId}`);
+                                // sliderDiv.innerHTML=` <ul><li>Spotlight</li><li>Annotate</li></ul>`;
+                                // sliderDiv.setAttribute('style','display:block');
+
+                                var pullSlider = document.querySelector('.pull-out-menu').cloneNode();
+                                pullSlider.setAttribute('id',`pull-temp-${confo_variables.activeTalkerInfo[parseInt(item)].clientId}`);
+                                
+                                if(room.roomSettings.canvas === false || room.roomSettings.canvas === null){
+                                    pullSlider.innerHTML=`<ul><li id="s_${item}" onclick="spotlight(this)">Spotlight</li></ul>`;
+                                }else if(room.roomSettings.canvas === true){
+                                    pullSlider.innerHTML=`<ul><li id="s_${item}" onclick="spotlight(this)">Spotlight</li><li id="a_${item}" onclick="annotate(this)">Annotation</li></ul>`;
+                                }
+                                pullSlider.setAttribute('style','display:none; z-index:6000;');
+
+
+                                var small_full_volume = document.querySelector('#full-volume-small').cloneNode();
+                                var tempClientId=String(confo_variables.activeTalkerInfo[parseInt(item)].clientId);
+                                small_full_volume.setAttribute('id', `full-volume-small-${confo_variables.activeTalkerInfo[parseInt(item)].clientId}`);
+                                small_full_volume.setAttribute('onclick', `showSlider('${tempClientId}')`);
+                                small_full_volume.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />';
+
+                                var small_pull=document.querySelector('#pop-out-icon').cloneNode();
+                                var tempClientId=String(confo_variables.activeTalkerInfo[parseInt(item)].clientId);
+                                small_pull.setAttribute('id',`pop-out-icon-${confo_variables.activeTalkerInfo[parseInt(item)].clientId}`);
+                                small_pull.setAttribute('onclick',`showPull('${tempClientId}')`);
+                                small_pull.innerHTML=`<line x1="21" y1="10" x2="3" y2="10" />
+                                <line x1="21" y1="6" x2="3" y2="6" />
+                                <line x1="21" y1="14" x2="3" y2="14" />
+                                <line x1="21" y1="18" x2="3" y2="18" />`;
+
+
+
+                                // var small_pop_out = document.querySelector('#pop-out-icon').cloneNode();
+                                // var tempClientId=String(confo_variables.activeTalkerInfo[parseInt(item)].clientId);
+                                // small_pop_out.setAttribute('id',`pop-out-icon-${confo_variables.activeTalkerInfo[parseInt(item)].clientId}`);
+                                // small_pop_out.setAttribute('onclick',`showMenu('${tempClientId}')`);
+                                // small_pop_out.innerHTML=`<line x1="21" y1="10" x2="3" y2="10" /><line x1="21" y1="6" x2="3" y2="6" /><line x1="21" y1="14" x2="3" y2="14" /><line x1="21" y1="18" x2="3" y2="18" />`;
+                                
 
                                 video_icon.appendChild(small_unmute_audio);
                                 video_icon.appendChild(small_mute_audio);
                                 video_icon.appendChild(small_unmute_video);
                                 video_icon.appendChild(small_mute_video);
+                                video_icon.appendChild(small_full_volume);
+                                if(isModerator===true){
+                                    video_icon.appendChild(small_pull);
+                                }
+                                 
                                 video_caption.appendChild(video_icon);
                                 remote_video_item.appendChild(remote_video_inner);
                                 remote_video_item.appendChild(video_caption);
+                                remote_video_item.appendChild(sliderDiv);
+                                if(isModerator===true){
+                                    remote_video_item.appendChild(pullSlider);
+                                }
+                                
                                 document.querySelector('.row-fluid').appendChild(remote_video_item);
                                 console.log("Append ho gaya sab kuch ==========");
                                 st.play(`${item}`, confo_variables.PlayerOpt);
@@ -794,6 +856,22 @@ var confo_variables = {
                     // to update the user list
                 });
 
+                room.addEventListener('user-data-received', function (resp) {
+
+                    console.log("res.message.message.type",resp.message.message.type);
+
+                    // if(resp.message.message.type === 'cobrowsing') {
+
+                    //     window.open(resp.message.message.message.url + `/name=${room.me.name}`);
+
+                    // }
+
+                    if(resp.message.message.type === 'cobrowsing'){
+                        window.open(resp.message.message.message.data + `/?cobrowser_name=${room.me.name}`);
+                    }
+
+                });
+
                 window.addEventListener('beforeunload', function (e) {
                     if (confo_variables.isSpotLightM === true) {
                         room.removeSpotlightUsers([confo_variables.SpotLightClientId], function (resp) {
@@ -821,6 +899,7 @@ var confo_variables = {
         });
 
     },
+
     unmuteLocalAudio: function () {
         localStream.unmuteAudio(function (res) {
             if (res.result === 0) {
@@ -857,6 +936,17 @@ var confo_variables = {
                 toastr.info('Audio Unmuted');
             }
         });
+    },
+    rangeChange: function(item,tempId){
+        var tempValue=document.querySelector(`#slider-value-${item}`).value;
+        document.querySelector(`#stream${item}`).volume=tempValue/100;
+        if(tempValue == 100){
+            document.querySelector(`#full-volume-small-${tempId}`).innerHTML=`<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />`
+        }else if(tempValue<100 && tempValue>0){
+            document.querySelector(`#full-volume-small-${tempId}`).innerHTML=`<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M15.54 8.46a5 5 0 0 1 0 7.07" />`;
+        }else if(tempValue == 0){
+            document.querySelector(`#full-volume-small-${tempId}`).innerHTML=`<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><line x1="23" y1="9" x2="17" y2="15" /><line x1="17" y1="9" x2="23" y2="15" />`;
+        }
     },
     shareScreen: function () {
         if (
@@ -1153,6 +1243,57 @@ var confo_variables = {
         document.querySelector('#lock_btn').style.display = 'none';
         document.querySelector('#unlock_btn').style.display = 'block';
     },
+    sliderShow:function(id){
+        if(room.me.role==='moderator'){
+            if(document.querySelector(`#pull-temp-${id}`).style.display==="block"){
+                document.querySelector(`#pull-temp-${id}`).style.display="none";
+                document.querySelector(`#pop-out-icon-${id}`).setAttribute('onclick',`showPull('${id}')`);
+            }
+            document.querySelector(`#slider-temp-${id}`).style.display="block";
+            document.querySelector(`#full-volume-small-${id}`).setAttribute('onclick',`offSlider('${id}')`);
+
+        }else{
+
+            document.querySelector(`#slider-temp-${id}`).style.display="block";
+            document.querySelector(`#full-volume-small-${id}`).setAttribute('onclick',`offSlider('${id}')`);
+        }
+            
+           
+
+    },
+    sliderOff:function(id){
+        document.querySelector(`#slider-temp-${id}`).style.display="none";
+        document.querySelector(`#full-volume-small-${id}`).setAttribute('onclick',`showSlider('${id}')`);
+    },
+    pullShow:function(id){
+
+        if(room.me.role==='moderator'){
+            if(document.querySelector(`#slider-temp-${id}`).style.display==="block"){
+                    document.querySelector(`#slider-temp-${id}`).style.display="none";
+                    document.querySelector(`#full-volume-small-${id}`).setAttribute('onclick',`showSlider('${id}')`);
+                }
+                     document.querySelector(`#pull-temp-${id}`).style.display="block";
+            document.querySelector(`#pop-out-icon-${id}`).setAttribute('onclick',`offPull('${id}')`);
+        }
+        else{
+            document.querySelector(`#pull-temp-${id}`).style.display="block";
+            document.querySelector(`#pop-out-icon-${id}`).setAttribute('onclick',`offPull('${id}')`);
+        }
+        
+    },
+    pullOff:function(id){
+        document.querySelector(`#pull-temp-${id}`).style.display="none";
+        document.querySelector(`#pop-out-icon-${id}`).setAttribute('onclick',`showPull('${id}')`);
+    },
+    menuShow:function(_this){
+        if(confo_variables.isMenuOn==false){
+            document.querySelector(`#pull-out-temp-${_this}`).style.display="block";
+            confo_variables.isMenuOn=true;
+        }else if(confo_variables.isMenuOn==true){
+            document.querySelector(`#pull-out-temp-${_this}`).style.display="none";
+            confo_variables.isMenuOn=false;
+        }
+    },
     cameraSwitch: function (_this) {
         localStream.switchCamera(localStream, _this.id, function (Stream) {
             if (Stream && Stream.getID) {
@@ -1225,6 +1366,14 @@ var confo_variables = {
             }
 
         })
+    },
+    cbOpen:function(){
+        document.querySelector('#cb-temp').style.display="inline-grid";
+        document.querySelector('#cb-small-btn').setAttribute('onclick','closeCb()');
+    },
+    cbClose:function(){
+        document.querySelector('#cb-temp').style.display="none";
+        document.querySelector('#cb-small-btn').setAttribute('onclick','openCb()');
     },
     updateSmallIcons: function () {
         ATList.forEach((item, index) => {
@@ -1300,7 +1449,14 @@ var confo_variables = {
                 toastr.error(result.message);
             }
         });
+    },
+
+    cbSend:function(tempdata){
+        room.sendUserData(tempdata,true,[],()=>{
+            // alert(`data= ${tempdata.message.data}`);
+        })
     }
+
 
 
 
@@ -1410,6 +1566,10 @@ function file_download(id) {
     );
 }
 
+function changeRange(number,tempId){
+    confo_variables.rangeChange(number,tempId);
+}
+
 
 function muteAudio() {
     confo_variables.muteLocalAudio();
@@ -1497,6 +1657,27 @@ function switchmic(_this) {
     confo_variables.microphoneSwitch(_this);
 }
 
+function showSlider(_this){
+    confo_variables.sliderShow(_this);
+}
+
+function offSlider(_this){
+    confo_variables.sliderOff(_this);
+}
+
+function showPull(_this){
+    confo_variables.pullShow(_this);
+}
+
+function offPull(_this){
+    confo_variables.pullOff(_this);
+}
+
+function showMenu(_this){
+    confo_variables.menuShow(_this);
+}
+
+
 function spotlight(_this) {
     if (confo_variables.isSpotLightM === false) {
         confo_variables.spot_light(_this);
@@ -1511,6 +1692,23 @@ function removeSpotlight(_this) {
     if (confo_variables.isSpotLightM === true) {
         confo_variables.spotlightRemove(_this);
     }
+}
+
+function newSpotlight(item){
+    if(confo_variables.isSpotLightM === false){
+        confo_variables.spotlightNew(item);
+    }else{
+        toastr.options.positionClass="toast-bottom-right";
+        toastr.error("Another participant is in spotlight");
+    }
+}
+
+function openCb(){
+    confo_variables.cbOpen();
+}
+
+function closeCb(){
+    confo_variables.cbClose();
 }
 
 
@@ -1528,6 +1726,8 @@ function removeAnnotation(_this) {
     confo_variables.stopAnnotation(_this);
 }
 
+
+
 function copyUrl() {
     toastr.options.positionClass = 'toast-top-right';
     toastr.info('URL Copied');
@@ -1536,4 +1736,16 @@ function copyUrl() {
 
 function changeCamera() {
     confo_variables.CameraChange();
+}
+
+function sendCb(){
+    var valueData = document.querySelector('#cb-select').value;
+    var cbData = {
+        "type":"cobrowsing",
+        "message":{
+           "data":`${valueData}` 
+        }
+    }
+    window.open(valueData+ `/?cobrowser_name=${room.me.name}`);
+    confo_variables.cbSend(cbData);
 }

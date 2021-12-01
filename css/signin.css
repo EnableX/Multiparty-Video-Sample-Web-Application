@@ -393,6 +393,19 @@ select.form-control:not([size]):not([multiple]) {
     border-color: red;
 }
 
+.btn-danger{
+  margin: 0 auto;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  border-color: red;
+  font-size: 16px;
+  padding: 6px 55px;
+}
+
+
 .btn-primary {
     margin: 0 auto;
     width: auto;
@@ -410,7 +423,19 @@ select.form-control:not([size]):not([multiple]) {
   background-color: #fff;
 
 }
+
+.btn-danger:hover, .btn-danger:active, .btn-danger:focus{
+  color: red;
+  border-color: red;
+  background-color: #fff;
+
+}
+
+
 .btn-primary:focus{
+  box-shadow: none !important;
+}
+.btn-danger:focus{
   box-shadow: none !important;
 }
 .checkbox-sec [type="radio"]:not(:checked), .checkbox-sec [type="radio"]:checked {
