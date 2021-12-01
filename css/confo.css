@@ -584,7 +584,62 @@ video {
     align-items: center;
     flex-wrap: wrap;
 }
+.custom-multi-app-page .video-area .video-item .cb-div{
+    display: block;
+    position: absolute;
+    bottom: 32px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 5px;
+    color: #fff;
+    padding: 31px 10px;
+    font-size: 13px;
+    right: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 6px;
+}
 
+.custom-multi-app-page .video-area .video-item  .volume-slider{
+    position: absolute;
+    bottom: 31px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 5px;
+    color: #fff;
+    padding: 1px 10px;
+    font-size: 13px;
+    right: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.custom-multi-app-page .video-area .video-item  .pull-out-menu{
+    position: absolute;
+    bottom: 30px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 5px;
+    color: #fff;
+    padding: 0px 0px;
+    padding-right: 20px;
+    font-size: 20px;
+    right: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
 .custom-multi-app-page .video-area .video-item .video-caption p {
     margin: 0;
@@ -1040,6 +1095,11 @@ video {
     bottom: 10px;
     right: 20px;
     color: white;
+    background: rgba(0,0,0,0.3);
+    border-radius: 5px;
+    padding-top: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .video-item {
@@ -1059,13 +1119,13 @@ video {
 }
 
 .custom-multi-app-page .screen-open .video-area .video-item .video-caption {
-    right: 4px;
+    right: -3px;
     position: absolute;
     bottom: 0px;
     background: rgba(0,0,0,0.3);
     border-radius: 5px;
     color: #fff;
-    padding: 1px 10px;
+    padding: 2px 4px;
     font-size: 13px;
     /* right: 10px; */
     display: -webkit-box;
@@ -1076,6 +1136,47 @@ video {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+
+
+.custom-multi-app-page .screen-open .video-area .video-item .volume-slider {
+    right: -12px;
+    position: absolute;
+    bottom: 25px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 20px;
+    color: #fff;
+    padding: 1px 0px;
+    font-size: 1px;
+    /* right: 10px; */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 128px;
+}
+.custom-multi-app-page .screen-open .video-area .video-item .pull-out-menu {
+    position: absolute;
+    bottom: 30px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 5px;
+    color: #fff;
+    padding: 0px 0px;
+    padding-right: 20px;
+    font-size: 10px;
+    right: 2px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .custom-multi-app-page .spotlight-open .video-area .video-item .video-caption svg {
@@ -1628,4 +1729,81 @@ video {
 
 .devices input {
     margin-right: 10px;
+}
+
+#volume-slider{
+    display: block;
+    position: inherit;
+    top: 41rem;
+    left: 40rem;
+    z-index: 10;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.4rem;
+}
+
+#pull-spotlight{
+    cursor: pointer !important;
+}
+
+.volume-slider{
+    z-index: 6000;
+    position: absolute;
+    display: block;
+    right: 20px;
+    color: white;
+    bottom: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+    z-index: 6000;
+    position: absolute;
+    display: block;
+    right: 20px;
+    color: white;
+    position: absolute;
+    display: flex;
+    bottom: 10px;
+    right: 20px;
+    color: white;
+    background: rgba(0,0,0,0.3);
+    border-radius: 5px;
+    padding-top: 8px;
+    bottom: 50px;
+    padding-right: 24px;
+    font-size: 20px;
+    /* width: 225px; */
+    padding-left: 34px;
+}
+
+.pull-out-menu{
+    z-index: 6000;
+    position: absolute;
+    display: block;
+    right: 20px;
+    color: white;
+    position: absolute;
+    display: flex;
+    bottom: 10px;
+    right: 20px;
+    color: white;
+    background: rgba(0,0,0,0.3);
+    border-radius: 5px;
+    padding-top: 8px;
+    bottom: 50px;
+    padding-right: 37px;
+    font-size: 20px;
+}
+
+
+
+li:hover{
+    cursor:pointer !important;
+}
+
+.feather .feather-volume-2:hover{
+    cursor: pointer !important;
+}
+
+.feather .feather-align-justify:hover{
+    cursor:pointer !important;
 }
