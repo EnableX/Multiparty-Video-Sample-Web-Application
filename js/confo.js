@@ -51,19 +51,6 @@ var confo_variables = {
     },
     ConnectCall: function (token) {
         EnxRtc.Logger.setLogLevel(5);
-        // if (navigator.userAgentData.mobile) {
-        //     console.log("yes I am from mobile");
-        //     confo_variables.config.facingMode = 'user';
-        //     console.log("config====" + JSON.stringify(confo_variables.config));
-        //     console.log("facingMode ====>" + confo_variables.config.facingMode);
-        //     document.querySelector('#switch_devices').style.display = 'none';
-        //     document.querySelector('#switch_cam').style.display = 'block';
-
-        // }
-        // else {
-        //     document.querySelector('#switch_devices').style.display = 'block';
-        //     document.querySelector('#switch_cam').style.display = 'none';
-        // }
         localStream = EnxRtc.joinRoom(token, {
             video: this.config.video, audio: this.config.audio, data: this.config.data, videoSize: this.VideoSize[this.video_type],
         }, function (success, error) {
@@ -106,16 +93,6 @@ var confo_variables = {
 
                 room_name.innerHTML = success.roomData.name;
                 document.title = success.roomData.name;
-
-                // if (isModerator) {
-                // var spot_div = document.createElement('div');
-                // spot_div.setAttribute('class', `spotlight`);
-                // spot_div.setAttribute('id', `s_self-view`);
-                // spot_div.setAttribute('style', "z-index:100 ;");
-                // spot_div.setAttribute('onclick', 'spotlight(this)');
-                // spot_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-                // spot_div.setAttribute('title', 'Spotlight');
-                // document.querySelector('#self-view').appendChild(spot_div);
                 var video_caption = document.createElement('div');
                 video_caption.setAttribute('class', 'video-caption');
                 var remote_name_p = document.createElement('p');
@@ -471,20 +448,6 @@ var confo_variables = {
                             confo_variables.annotateStreamID = '';
                         }
                     }
-                    // else if (event.role === 'moderator') {
-                    //     if (confo_variables.isSpotLightP === true) {
-                    //         document.querySelector('.custom-app-wrapper').classList.remove('screen-open');
-                    //         document.querySelector('.custom-app-wrapper').classList.remove('spotlight-open');
-                    //         var r = document.querySelector(`.remote_view_${confo_variables.SpotLightUserStreamId}`);
-                    //         var fluid = document.querySelector('.row-fluid');
-
-                    //         fluid.appendChild(r);
-
-                    //         confo_variables.SpotLightClientId = '';
-                    //         confo_variables.SpotLightUserStreamId = '';
-                    //         confo_variables.isSpotLightP = false;
-                    //     }
-                    // }
                     else {
                         if (event.clientId === confo_variables.SpotLightClientId) {
                             document.querySelector('.custom-app-wrapper').classList.remove('screen-open');
@@ -937,24 +900,6 @@ var confo_variables = {
 
         room.startAnnotation(this.annotateStreamID, function (rs) {
             console.log("StartAnnotation", JSON.stringify(rs));
-            // if (rs.result === 0) {
-            //     isPresentating = true;
-            //     shareStart = true;
-            //     $("#share_screen_btn").prop("title", "Stop Share").addClass('blink-image');
-            //     $('#screenShareStarted').show();
-            // } else if (rs.result === 1151) {
-            //     desktop_shared = false;
-            //     toastr.error(rs.error);
-            // } else if (rs.result === 1144) {
-            //     desktop_shared = false;
-            //     // toastr.error(rs.error);
-            // } else if (rs.result === 1150) {
-            //     desktop_shared = false;
-            //     $("#extension-dialog").modal("toggle");
-            // } else {
-            //     desktop_shared = false;
-            //     toastr.error("Screen share not supported");
-            // }
         });
         this.annotateClientId = confo_variables.activeTalkerInfo[parseInt(id_annotate_div)].clientId;
         document.querySelector(`#a_${parseInt(id_annotate_div)}`).style.zIndex = 5010;
@@ -977,7 +922,6 @@ var confo_variables = {
         room.stopAnnotation(function (res) {
             console.log("stopAnnotation", JSON.stringify(res));
             if (res.result == 0) {
-                // $("#share_screen_btn").prop("title", "Start Share").removeClass('blink-image');
 
             }
         });
