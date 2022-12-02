@@ -1,6 +1,7 @@
 // All variables are stored in object which are used in this file
 
 var confo_variables = {
+    // Variables Start
     activeTalkerInfo: {},
     roomId: '',
     searchParams: '',
@@ -49,21 +50,13 @@ var confo_variables = {
             }
         }
     },
+
+    // Variables end
+
+
+    // Function to joinRoom , just pass the token here to join the room
     ConnectCall: function (token) {
         EnxRtc.Logger.setLogLevel(5);
-        // if (navigator.userAgentData.mobile) {
-        //     console.log("yes I am from mobile");
-        //     confo_variables.config.facingMode = 'user';
-        //     console.log("config====" + JSON.stringify(confo_variables.config));
-        //     console.log("facingMode ====>" + confo_variables.config.facingMode);
-        //     document.querySelector('#switch_devices').style.display = 'none';
-        //     document.querySelector('#switch_cam').style.display = 'block';
-
-        // }
-        // else {
-        //     document.querySelector('#switch_devices').style.display = 'block';
-        //     document.querySelector('#switch_cam').style.display = 'none';
-        // }
         localStream = EnxRtc.joinRoom(token, {
             video: this.config.video, audio: this.config.audio, data: this.config.data, videoSize: this.VideoSize[this.video_type],
         }, function (success, error) {
@@ -82,23 +75,23 @@ var confo_variables = {
                 }
             }
             if (success && success !== null) {
-                // console.log("this.localStream===="+JSON.stringify(localStream));
+
+                // self-view is a div id in confo.html , and here we play the localStream
                 localStream.play("self-view", confo_variables.PlayerOpt);
                 console.log("confo_varibles---" + this.isAudioMute);
                 console.log("confo_varibles---" + confo_variables.isAudioMute);
 
                 document.getElementById(`${localStream.config.video.deviceId}`).checked = true;
                 document.getElementById(`${localStream.config.audio.deviceId}`).checked = true;
+ 
+                room = success.room;    // Room object is accessed here
 
-
-                room = success.room;
-
-                confo_variables.roomId = room.roomID;
+                confo_variables.roomId = room.roomID;   //Room ID is accessed here
                 // document.querySelector('#invite_url').style.display = 'block';
                 confo_variables.updateUsersList();
 
                 var local_name = document.querySelector('.video-caption p');
-                local_name.innerHTML = room.me.name;
+                local_name.innerHTML = room.me.name;    // My name is accessible here
 
                 var room_name = document.querySelector('.room-name h4');
 
@@ -107,15 +100,7 @@ var confo_variables = {
                 room_name.innerHTML = success.roomData.name;
                 document.title = success.roomData.name;
 
-                // if (isModerator) {
-                // var spot_div = document.createElement('div');
-                // spot_div.setAttribute('class', `spotlight`);
-                // spot_div.setAttribute('id', `s_self-view`);
-                // spot_div.setAttribute('style', "z-index:100 ;");
-                // spot_div.setAttribute('onclick', 'spotlight(this)');
-                // spot_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-                // spot_div.setAttribute('title', 'Spotlight');
-                // document.querySelector('#self-view').appendChild(spot_div);
+                // Adding name to video player start
                 var video_caption = document.createElement('div');
                 video_caption.setAttribute('class', 'video-caption');
                 var remote_name_p = document.createElement('p');
@@ -123,7 +108,7 @@ var confo_variables = {
                 console.log("name is --=--", room.me.name);
                 video_caption.appendChild(remote_name_p);
                 document.querySelector('#self-view').appendChild(video_caption);
-                // }
+                // Adding name to video player end
 
                 if (!isModerator) {
                     // document.querySelector('#invite_url').style.display = 'none';
@@ -144,7 +129,7 @@ var confo_variables = {
                 }
                 const video_player_len = document.querySelectorAll('.remote-view');
 
-
+                // active-talkers-updated event is to play the videos of talkers 
                 room.addEventListener('active-talkers-updated', function (event) {
                     console.log("Active-Talker-Updated---" + event);
 
@@ -190,44 +175,14 @@ var confo_variables = {
                         }
                         else {
                             const st = room.remoteStreams.get(parseInt(item));
+
+                            // This is to create remote videos Player in a room and to play remote streams - start
                             if (!st.local) {
                                 // confo_variables.activeTlakerUI(st, item);
                                 var remote_video_item = document.createElement('div');
                                 remote_video_item.setAttribute('class', `video-item remote-view remote_view_${parseInt(item)}`);
                                 remote_video_item.style.display = 'block';
 
-                                if (isModerator) {
-                                    var spot_and_annotate = document.createElement('div');
-                                    spot_and_annotate.setAttribute('class', 'spotannotate');
-                                    var spot_div = document.createElement('div');
-                                    spot_div.setAttribute('class', `spotlight`);
-                                    spot_div.setAttribute('id', `s_${item}`);
-                                    spot_div.setAttribute('style', "z-index:100 ;");
-                                    spot_div.setAttribute('onclick', 'spotlight(this)');
-                                    spot_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-                                    spot_div.setAttribute('title', 'Spotlight');
-                                    remote_video_item.appendChild(spot_div);
-                                    spot_and_annotate.appendChild(spot_div);
-
-                                    if (room.roomSettings.hasOwnProperty('canvas')) {
-                                        {
-                                            if (room.roomSettings.canvas === true) {
-                                                var annotate_div = document.createElement('div');
-                                                annotate_div.setAttribute('class', `annotate`);
-                                                annotate_div.setAttribute('id', `a_${item}`);
-                                                annotate_div.setAttribute('style', "z-index:100 ;");
-                                                annotate_div.setAttribute('onclick', 'annotate(this)');
-                                                annotate_div.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>';
-                                                annotate_div.setAttribute('title', 'Annotate User');
-                                                spot_and_annotate.appendChild(annotate_div);
-                                            }
-                                        }
-                                    }
-
-
-                                    remote_video_item.appendChild(spot_and_annotate);
-
-                                }
 
                                 var remote_video_inner = document.createElement('div');
                                 remote_video_inner.setAttribute('class', `video-inner video-inner-copy remote_${confo_variables.activeTalkerInfo[parseInt(item)].clientId}`);
@@ -270,6 +225,7 @@ var confo_variables = {
                                 console.log("Append ho gaya sab kuch ==========");
                                 st.play(`${item}`, confo_variables.PlayerOpt);
                             }
+                            // This is to create remote videos Player in a room and to play remote streams - end
                         }
                     });
 
@@ -397,7 +353,7 @@ var confo_variables = {
                     confo_variables.updateSmallIcons();
                 });
 
-                // Notification to others when a user muted audio
+                // Notification when a user muted audio
                 room.addEventListener("user-audio-muted", function (event) {
                     // Handle UI here
                     //confirm("Audio is muted");
@@ -407,7 +363,7 @@ var confo_variables = {
                     // confo_variables.updateSmallIcons();
                 });
 
-                // Notification to others when a user muted audio
+                // Notification when a user unmuted audio
                 room.addEventListener("user-audio-unmuted", function (event) {
                     // Handle UI here
                     //  confirm("Audio is unmuted");
@@ -417,25 +373,25 @@ var confo_variables = {
                     // confo_variables.updateSmallIcons();
                 });
 
+                // Notification when a user muted video
                 room.addEventListener("user-video-muted", function (event) {
                     // Handle UI here
                     // confirm("Video is muted");
                     if (room.clientId !== event.clientId) {
                         confo_variables.updateUsersList();
                     }
-                    // confo_variables.updateSmallIcons();
                 });
 
-                // Notification to others when a user muted video
+                // Notification when a user unmuted video
                 room.addEventListener("user-video-unmuted", function (event) {
                     // Handle UI here
                     //confirm("Video is unmuted");
                     if (room.clientId !== event.clientId) {
                         confo_variables.updateUsersList();
                     }
-                    // confo_variables.updateSmallIcons();
                 });
 
+                // Notification to others when a user disconnects
                 room.addEventListener("user-disconnected", function (event) {
                     // One user is disconnected
                     // event - User Information of disconnected user
@@ -471,20 +427,6 @@ var confo_variables = {
                             confo_variables.annotateStreamID = '';
                         }
                     }
-                    // else if (event.role === 'moderator') {
-                    //     if (confo_variables.isSpotLightP === true) {
-                    //         document.querySelector('.custom-app-wrapper').classList.remove('screen-open');
-                    //         document.querySelector('.custom-app-wrapper').classList.remove('spotlight-open');
-                    //         var r = document.querySelector(`.remote_view_${confo_variables.SpotLightUserStreamId}`);
-                    //         var fluid = document.querySelector('.row-fluid');
-
-                    //         fluid.appendChild(r);
-
-                    //         confo_variables.SpotLightClientId = '';
-                    //         confo_variables.SpotLightUserStreamId = '';
-                    //         confo_variables.isSpotLightP = false;
-                    //     }
-                    // }
                     else {
                         if (event.clientId === confo_variables.SpotLightClientId) {
                             document.querySelector('.custom-app-wrapper').classList.remove('screen-open');
@@ -501,7 +443,6 @@ var confo_variables = {
                     }
                     console.log("User-Disconnected---" + JSON.stringify(event));
                     confo_variables.updateUsersList();
-                    // confo_variables.updateSmallIcons();
                 });
 
 
@@ -509,7 +450,6 @@ var confo_variables = {
                     // console.log(data);
                     console.log('user-connected', JSON.stringify(event));
                     confo_variables.updateUsersList();
-                    // confo_variables.updateSmallIcons();
                 });
 
                 // To receive message notification 
@@ -809,6 +749,7 @@ var confo_variables = {
     },
 
     muteLocalAudio: function () {
+        // Mute our local audio
         localStream.muteAudio(function (res) {
             if (res.result === 0) {
                 document.querySelector('#mute_btn').title = 'Unmute Audio'
@@ -822,6 +763,7 @@ var confo_variables = {
 
     },
     unmuteLocalAudio: function () {
+        // Unmute our local audio
         localStream.unmuteAudio(function (res) {
             if (res.result === 0) {
                 document.querySelector('#mute_btn').title = 'Mute Audio'
@@ -834,6 +776,7 @@ var confo_variables = {
         });
     },
     muteLocalVideo: function () {
+        // Mute our local video
         localStream.muteVideo(function (res) {
             if (res.result === 0) {
                 document.querySelector('#mutev_btn').title = 'Unmute Video';
@@ -847,6 +790,7 @@ var confo_variables = {
 
     },
     unmuteLocalVideo: function () {
+        // Unmute our local video
         localStream.unmuteVideo((res) => {
             if (res.result === 0) {
                 document.querySelector('#mutev_btn').title = 'Mute Video';
@@ -859,6 +803,7 @@ var confo_variables = {
         });
     },
     shareScreen: function () {
+        // Start screen share calling function
         if (
             navigator.userAgent.indexOf("QQBrowser") > -1 &&
             room.Connection.getBrowserVersion() < 72
@@ -937,24 +882,6 @@ var confo_variables = {
 
         room.startAnnotation(this.annotateStreamID, function (rs) {
             console.log("StartAnnotation", JSON.stringify(rs));
-            // if (rs.result === 0) {
-            //     isPresentating = true;
-            //     shareStart = true;
-            //     $("#share_screen_btn").prop("title", "Stop Share").addClass('blink-image');
-            //     $('#screenShareStarted').show();
-            // } else if (rs.result === 1151) {
-            //     desktop_shared = false;
-            //     toastr.error(rs.error);
-            // } else if (rs.result === 1144) {
-            //     desktop_shared = false;
-            //     // toastr.error(rs.error);
-            // } else if (rs.result === 1150) {
-            //     desktop_shared = false;
-            //     $("#extension-dialog").modal("toggle");
-            // } else {
-            //     desktop_shared = false;
-            //     toastr.error("Screen share not supported");
-            // }
         });
         this.annotateClientId = confo_variables.activeTalkerInfo[parseInt(id_annotate_div)].clientId;
         document.querySelector(`#a_${parseInt(id_annotate_div)}`).style.zIndex = 5010;
@@ -977,7 +904,6 @@ var confo_variables = {
         room.stopAnnotation(function (res) {
             console.log("stopAnnotation", JSON.stringify(res));
             if (res.result == 0) {
-                // $("#share_screen_btn").prop("title", "Start Share").removeClass('blink-image');
 
             }
         });
@@ -992,6 +918,7 @@ var confo_variables = {
     },
 
     updateUsersList: function () {
+        // Update user list when new user is joined or mute themselves
         var list = '';
         var chilren_user_list = document.querySelector(".participants-inner");
         var user_list_length = room.userList.size;
@@ -1055,8 +982,6 @@ var confo_variables = {
                     small_mute_video.innerHTML = ' <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2m5.66 0H14a2 2 0 0 1 2 2v3.34l1 1L23 7v10"></path><line x1="1" y1="1" x2="23" y2="23"></line>'
 
                 }
-
-
                 part_item.appendChild(part_desc);
 
                 var icons_div = document.createElement('div');
@@ -1075,6 +1000,7 @@ var confo_variables = {
         );
     },
     chatSendToOthers: function (obj) {
+        // Send message to others
         var message_to_send = document.querySelector('textarea').value.trim();
         if (message_to_send !== "") {
             var chat_text_area = document.querySelector('.chat-textarea');
