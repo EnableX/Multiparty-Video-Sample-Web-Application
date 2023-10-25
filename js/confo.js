@@ -65,6 +65,11 @@ var confo_variables = {
 
             if (error && error !== null) {
                 // Look for error.type and error.msg.name to handle Exception
+                if (document.querySelector('.loader')) {
+                    document.querySelector('.loader').innerHTML = '<h1>Disconnecting...</h1>';
+                    document.querySelector('.loader').style.display = 'flex';
+                    document.querySelector('.inner').remove();
+                }
                 if (error.type == "media-access-denied") {
                     // Media Media Inaccessibility
                     toastr.options.positionClass = 'toast-bottom-right';
@@ -73,6 +78,9 @@ var confo_variables = {
                     toastr.options.positionClass = 'toast-bottom-right';
                     toastr.error('Room is locked');
                 }
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 5000);
             }
             if (success && success !== null) {
 
@@ -81,8 +89,10 @@ var confo_variables = {
                 console.log("confo_varibles---" + this.isAudioMute);
                 console.log("confo_varibles---" + confo_variables.isAudioMute);
 
-                document.getElementById(`${localStream.config.video.deviceId}`).checked = true;
-                document.getElementById(`${localStream.config.audio.deviceId}`).checked = true;
+                if (document.getElementById(`${localStream.config.video.deviceId}`) && document.getElementById(`${localStream.config.audio.deviceId}`)) {
+                    document.getElementById(`${localStream.config.video.deviceId}`).checked = true;
+                    document.getElementById(`${localStream.config.audio.deviceId}`).checked = true;
+                }
  
                 room = success.room;    // Room object is accessed here
 
@@ -1202,7 +1212,7 @@ var confo_variables = {
             })
         }
 
-        window.location.href = window.location.origin;
+        room.disconnect();
     },
     CameraChange: function () {
         var faceMode = this.face;
